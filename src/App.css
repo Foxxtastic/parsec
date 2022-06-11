@@ -1,0 +1,16 @@
+.fileuploadpage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text_content {
+    border: 1px solid black;
+    padding: 0.5em;
+}
+
+.text_line {
+    font-size: 1.1em;
+    margin: 1em, 0.5em, 1em, 0.5em;
+}
