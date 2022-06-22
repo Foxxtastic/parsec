@@ -1,3 +1,4 @@
+import { Checkbox } from "antd";
 import { useEffect, useState } from "react"
 
 type Line = {
@@ -18,19 +19,30 @@ const getTextLines = (text: string): Line[] => {
 }
 
 export function TextComponent({ content }: TextComponentProps) {
-    const [Lines, setLines] = useState<Line[]>([]);
+    const [lines, setLines] = useState<Line[]>([]);
 
     useEffect(() => {
         content && setLines(getTextLines(content))
     }, [content])
-    console.log(Lines)
+    console.log(lines);
+
+    const toggleActiveLine = (index: number) => {
+        setLines(lines.map((_, idx) => idx !== index ? _ :
+            ({ text: _.text, active: !_.active })
+        ));
+    }
 
     return (
         <>
-            {Lines.length !== 0 &&
+            {lines.length !== 0 &&
                 <div className="text_content">
-                    {Lines.map((_, idx) =>
-                        <div key={idx} className="text_line">{_.text}</div>
+                    {lines.map((_, idx) =>
+                        <div key={idx} className="text_line">
+                            {_.text !== '' && <Checkbox
+                                onChange={() => toggleActiveLine(idx)}>
+                            </Checkbox>}
+                            {_.text}
+                        </div>
                     )}
                 </div>}
         </>
