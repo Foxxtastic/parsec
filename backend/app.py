@@ -1,11 +1,14 @@
 import json
 from flask import Flask
+from flask_cors import CORS
 import hu_core_news_lg
-from langcodes import Language
 import psycopg2
-from stopwords import stop_words
+from psycopg2.extras import RealDictCursor
+
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def get_db_connecton():
@@ -23,8 +26,9 @@ nlp = hu_core_news_lg.load()
 @app.route("/stopword")
 def index():
     conn = get_db_connecton()
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM stop_words')
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    sql_get_all_stop_words = 'SELECT * FROM stop_words'
+    cur.execute(sql_get_all_stop_words)
     result = cur.fetchall()
     cur.close()
     conn.close()
