@@ -1,6 +1,7 @@
 import { Layout, Menu, MenuProps } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
+import { AddStopword } from './components/AddStopword';
 import { FileUploadPage } from './components/FileUploadPage';
 import { Home } from './components/Home';
 import { StopWordsPage } from './components/StopWordsPage';
@@ -55,6 +56,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/upload' element={<FileUploadPage />} />
             <Route path='/stopwords' element={<StopWordsPage />} />
+            <Route path='/stopwords/add' element={<AddStopword />} />
           </Routes>
         </Content>
       </Layout>
