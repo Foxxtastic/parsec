@@ -1,10 +1,8 @@
 @import '~antd/dist/antd.css';
 
-.fileuploadpage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.home_page {
+    padding: 1em;
+    font-size: 2em;
 }
 
 .text_content {
@@ -32,3 +30,8 @@
     cursor: pointer;
     color: brown;
   }
+
+.upload_component {
+    display: block;
+    float: right;
+}

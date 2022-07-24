@@ -25,8 +25,7 @@ export function TextComponent({ name, content }: TextComponentProps) {
 
     useEffect(() => {
         content && setLines(getTextLines(content))
-    }, [content])
-    console.log(lines);
+    }, [content]);
 
     const toggleActiveLine = (index: number) => {
         setLines(lines.map((_, idx) => idx !== index ? _ :
