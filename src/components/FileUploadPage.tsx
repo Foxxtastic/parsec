@@ -1,9 +1,9 @@
 import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
+import { Spin, UploadProps } from 'antd';
 import { Button, message, Upload } from 'antd';
 import { RcFile } from 'antd/lib/upload';
 import { useState } from 'react';
-import { TextComponent } from './TextComponent';
+import { createFile } from '../helpers/fetchFunctions';
 
 const beforeUpload = (file: RcFile) => {
     const isTxt = file.type === 'text/plain';   //only txt is uploadable yet.
@@ -13,15 +13,16 @@ const beforeUpload = (file: RcFile) => {
     return isTxt
 };
 
-const getFileContent = (txt: RcFile, callback: (content: string) => void) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result as string));
-    reader.readAsText(txt, 'utf-8');
-};
-
 export function FileUploadPage() {
 
-    const [fileContent, setFileContent] = useState<string | null>(null)
+    const [isloading, setIsloading] = useState(false);
+
+    const uploadFile = (file: RcFile) => {
+        setIsloading(true);
+        createFile("http://localhost:5000/document", file)
+            .then(res => console.log(res))
+            .finally(() => setIsloading(false))
+    };
 
     const props: UploadProps = {
         name: 'file',
@@ -39,10 +40,9 @@ export function FileUploadPage() {
                 console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
-                getFileContent(info.file.originFileObj as RcFile, content => {
-                    setFileContent(content);
-                });
-            } else if (info.file.status === 'error') {
+                uploadFile(info.file.originFileObj as RcFile);
+            }
+            else if (info.file.status === 'error') {
                 message.error(`${info.file.name} sikertelen feltöltés.`);
             }
         }
@@ -50,11 +50,13 @@ export function FileUploadPage() {
 
     return (
         <div className='fileuploadpage'>
-            <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Szövegfájl feltöltése</Button>
-            </Upload>
-
-            <TextComponent content={fileContent ? fileContent : null} />
+            {isloading ?
+                <Spin /> :
+                <>
+                    <Upload {...props}>
+                        <Button icon={<UploadOutlined />}>Szövegfájl feltöltése</Button>
+                    </Upload>
+                </>}
         </div >
     )
 

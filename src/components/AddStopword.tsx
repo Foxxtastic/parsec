@@ -13,6 +13,7 @@ export function AddStopword() {
     const addStopWord = () => {
         createData("http://localhost:5000/stopword", stopword)
             .then(res => console.log(res))
+            .finally(() => navigate(-1))
     }
 
     return (

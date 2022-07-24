@@ -1,4 +1,4 @@
-import { Checkbox } from "antd";
+import { Checkbox, Typography } from "antd";
 import { useEffect, useState } from "react"
 
 type Line = {
@@ -7,6 +7,7 @@ type Line = {
 }
 
 type TextComponentProps = {
+    name: string,
     content: string | null
 }
 
@@ -18,8 +19,9 @@ const getTextLines = (text: string): Line[] => {
     );
 }
 
-export function TextComponent({ content }: TextComponentProps) {
+export function TextComponent({ name, content }: TextComponentProps) {
     const [lines, setLines] = useState<Line[]>([]);
+    const { Title } = Typography;
 
     useEffect(() => {
         content && setLines(getTextLines(content))
@@ -34,6 +36,7 @@ export function TextComponent({ content }: TextComponentProps) {
 
     return (
         <>
+            <Title level={2} style={{ textAlign: 'center', margin: '0.5em' }}>{name}</Title>
             {lines.length !== 0 &&
                 <div className="text_content">
                     {lines.map((_, idx) =>

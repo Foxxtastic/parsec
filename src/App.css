@@ -9,7 +9,8 @@
 
 .text_content {
     border: 1px solid black;
-    padding: 0.5em;
+    padding: 1em;
+    margin-top: 2em;
 }
 
 .text_line {
@@ -20,3 +21,14 @@
 .content {
     padding: 1em;
 }
+
+.editable-row .ant-form-item-explain {
+    position: absolute;
+    top: 100%;
+    font-size: 12px;
+  }
+
+  .cancel {
+    cursor: pointer;
+    color: brown;
+  }

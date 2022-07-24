@@ -2,8 +2,8 @@ import { Layout, Menu, MenuProps } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import { AddStopword } from './components/AddStopword';
+import { DocumentListPage } from './components/DocumentListPage';
 import { FileUploadPage } from './components/FileUploadPage';
-import { Home } from './components/Home';
 import { StopWordsPage } from './components/StopWordsPage';
 
 const { Header, Content } = Layout;
@@ -11,12 +11,12 @@ const { Header, Content } = Layout;
 const menuItems: MenuProps['items'] = [
   {
     key: "/",
-    label: "home",
+    label: "Dokumentum feltöltés",
     style: { width: "25%" }
   },
   {
-    key: "/upload",
-    label: "Dokumentum feltöltés",
+    key: "/documents",
+    label: "Dokumentumok",
     style: { width: "25%" }
   },
   {
@@ -53,8 +53,8 @@ function App() {
         </Header>
         <Content style={{ padding: '0 50px' }}>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/upload' element={<FileUploadPage />} />
+            <Route path='/' element={<FileUploadPage />} />
+            <Route path='/documents' element={<DocumentListPage />} />
             <Route path='/stopwords' element={<StopWordsPage />} />
             <Route path='/stopwords/add' element={<AddStopword />} />
           </Routes>
