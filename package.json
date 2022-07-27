@@ -1,5 +1,4 @@
 {
-  
   "name": "parsec",
   "version": "0.1.0",
   "private": true,
@@ -20,11 +19,15 @@
     "typescript": "^4.7.3",
     "web-vitals": "^2.1.4"
   },
+  "cacheDirectories": [
+    "client/node_modules"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "eslintConfig": {
     "extends": [
