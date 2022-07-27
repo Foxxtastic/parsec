@@ -4,3 +4,4 @@ huspacy==0.4.3
 psycopg2==2.9.3
 psycopg2_binary==2.9.1
 spacy==3.4.1
+gunicorn
