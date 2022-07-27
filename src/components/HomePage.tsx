@@ -1,6 +1,6 @@
 export function HomePage() {
     return (
-        <div className="home_page">
+        <div className="home-page">
             Parsec applikáció.
         </div>
     )

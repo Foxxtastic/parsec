@@ -1,10 +1,12 @@
 import { Layout, Menu, MenuProps } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-import { AddStopword } from './components/AddStopword';
-import { DocumentListPage } from './components/DocumentListPage';
+import { AddStopword } from './components/specialwords/AddStopword';
+import { DocumentListPage } from './components/documents/DocumentListPage';
 import { HomePage } from './components/HomePage';
-import { StopWordsPage } from './components/StopWordsPage';
+import { StopwordsPage } from './components/specialwords/StopwordsPage';
+import { KeywordsPage } from './components/specialwords/KeywordsPage';
+import { AddKeyword } from './components/specialwords/AddKeyword';
 
 const { Header, Content } = Layout;
 
@@ -12,17 +14,22 @@ const menuItems: MenuProps['items'] = [
   {
     key: "/",
     label: "Home",
-    style: { width: "25%" }
+    style: { width: "10%" }
   },
   {
     key: "/documents",
     label: "Dokumentumok",
-    style: { width: "25%" }
+    style: { width: "20%" }
+  },
+  {
+    key: "/keywords",
+    label: "Kulcsszavak",
+    style: { width: "20%" }
   },
   {
     key: "/stopwords",
     label: "Töltelékszavak",
-    style: { width: "25%" }
+    style: { width: "20%" }
   }
 ]
 
@@ -55,7 +62,9 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/documents' element={<DocumentListPage />} />
-            <Route path='/stopwords' element={<StopWordsPage />} />
+            <Route path='/keywords' element={<KeywordsPage />} />
+            <Route path='/keywords/add' element={<AddKeyword />} />
+            <Route path='/stopwords' element={<StopwordsPage />} />
             <Route path='/stopwords/add' element={<AddStopword />} />
           </Routes>
         </Content>

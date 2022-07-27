@@ -1,31 +1,31 @@
 import { Button, Input, Typography } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createData } from "../helpers/fetchFunctions";
+import { createData } from "../../helpers/fetchFunctions";
 
 const { Title } = Typography;
 
-export function AddStopword() {
+export function AddKeyword() {
 
     const navigate = useNavigate();
-    const [stopword, setStopword] = useState<string>('');
+    const [keyword, setKeyword] = useState<string>('');
 
-    const addStopWord = () => {
-        createData("http://localhost:5000/stopword", stopword)
+    const addKeyword = () => {
+        createData("http://localhost:5000/keyword", keyword)
             .then(res => console.log(res))
             .finally(() => navigate(-1))
     }
 
     return (
         <div className="content">
-            <Title level={2} > Töltelékszó hozzáadása</Title>
+            <Title level={2} > Kulcsszó hozzáadása</Title>
             <Input
-                value={stopword}
+                value={keyword}
                 style={{ width: "300px" }}
-                onChange={(e) => setStopword(e.target.value.toString())} />
+                onChange={(e) => setKeyword(e.target.value.toString())} />
             <Button
                 style={{ marginLeft: "20px" }}
-                onClick={addStopWord}>
+                onClick={addKeyword}>
                 OK
             </Button>
             <Button

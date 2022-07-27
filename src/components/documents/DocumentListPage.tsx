@@ -1,23 +1,11 @@
 import { Button, message, Spin, Upload, UploadProps } from "antd";
 import Table, { ColumnsType } from "antd/lib/table"
 import { useEffect, useState } from "react";
-import { createFile, deleteData, getAllData, getData } from "../helpers/fetchFunctions";
-import { Buffer } from 'buffer';
+import { createFile, deleteData, getAllData, getData } from "../../helpers/fetchFunctions";
 import { TextComponent } from "./TextComponent";
 import { UploadOutlined } from '@ant-design/icons';
 import { RcFile } from "antd/lib/upload";
-
-type Document = {
-    id: number,
-    fileName: string,
-    upLoaded: string
-}
-
-type File = {
-    name: string,
-    content: string
-}
-
+import { MyDocument, TXTFile } from "../../types/types";
 
 const beforeUpload = (file: RcFile) => {
     const isTxt = file.type === 'text/plain';   //only txt is uploadable yet.
@@ -28,8 +16,8 @@ const beforeUpload = (file: RcFile) => {
 };
 
 export function DocumentListPage() {
-    const [documents, setDocuments] = useState<Document[] | undefined>(undefined);
-    const [file, setFile] = useState<File | undefined>(undefined);
+    const [documents, setDocuments] = useState<MyDocument[] | undefined>(undefined);
+    const [file, setFile] = useState<TXTFile | undefined>(undefined);
     const [isloading, setIsloading] = useState(false);
 
     useEffect(() => {
@@ -46,7 +34,7 @@ export function DocumentListPage() {
     const getDocumentById = (id: number) => {
         setIsloading(true);
         getData("http://localhost:5000/document", id)
-            .then(res => getFileContent(res[0]))
+            .then(res => setFile(res))
             .finally(() => setIsloading(false))
 
     }
@@ -60,14 +48,6 @@ export function DocumentListPage() {
                 setIsloading(false);
             })
     };
-
-    const getFileContent = (file: any) => {
-        const loadedFile: File = {
-            name: file.file_name,
-            content: Buffer.from(file.encode, "base64").toString()
-        }
-        setFile(loadedFile);
-    }
 
     const props: UploadProps = {
         name: 'file',
@@ -93,7 +73,7 @@ export function DocumentListPage() {
         }
     }
 
-    const columns: ColumnsType<Document> = [
+    const columns: ColumnsType<MyDocument> = [
         {
             title: 'Id',
             dataIndex: 'id',
@@ -115,7 +95,7 @@ export function DocumentListPage() {
             key: 'delete',
             dataIndex: 'delete',
             width: '10%',
-            render: (_text: any, record: Document) => (
+            render: (_text: any, record: MyDocument) => (
                 <button onClick={(e: any) => {
                     e.stopPropagation();
                     deleteData("http://localhost:5000/document", record.id)
@@ -132,11 +112,11 @@ export function DocumentListPage() {
     ]
 
     return (
-        <div>
+        <div className="content">
             {isloading ?
                 <Spin /> :
                 file ?
-                    <TextComponent name={file.name} content={file.content} /> :
+                    <TextComponent name={file.file_name} sentences={file.sentences} onClose={() => setFile(undefined)} /> :
                     <>
                         <Table
                             rowKey="id"
@@ -148,8 +128,9 @@ export function DocumentListPage() {
                                     onClick: event => { getDocumentById(record.id) }, // click row
                                 };
                             }}
+                            pagination={false}
                         />
-                        <Upload {...props} className="upload_component">
+                        <Upload {...props} className="upload-component">
                             <Button icon={<UploadOutlined />}>Szövegfájl feltöltése</Button>
                         </Upload>
                     </>

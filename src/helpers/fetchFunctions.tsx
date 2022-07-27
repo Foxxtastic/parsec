@@ -81,3 +81,20 @@ export function deleteData(url: string, id: number) {
             return jsonResponse;
         })
 }
+
+export function getKeywordsInDocument(text: string) {
+    return fetch("http://localhost:5000/find_keywords", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(text)
+    })
+        .then(res => res.json())
+        .then(jsonResponse => {
+            if (jsonResponse.error) {
+                throw new Error(jsonResponse.error.message);
+            }
+            return jsonResponse;
+        })
+}

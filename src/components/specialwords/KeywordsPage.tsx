@@ -1,11 +1,11 @@
 import { Button, Form, Input, Popconfirm, Spin, Table, Typography } from "antd";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { deleteData, getAllData, updateData } from "../helpers/fetchFunctions";
+import { deleteData, getAllData, updateData } from "../../helpers/fetchFunctions"
 
-type Stopword = {
+type Keyword = {
     id: number,
-    stop_word: string
+    key_word: string
 }
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
@@ -13,7 +13,7 @@ interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     dataIndex: string;
     title: any;
     inputtype: 'text';
-    record: Stopword;
+    record: Keyword;
     index: number;
     children: React.ReactNode;
 }
@@ -52,23 +52,27 @@ const EditableCell: React.FC<EditableCellProps> = ({
     );
 };
 
-export function StopWordsPage() {
+export function KeywordsPage() {
     const [form] = Form.useForm();
     const navigate = useNavigate()
-    const [stopwords, setStopwords] = useState<Stopword[] | undefined>(undefined);
+    const [keywords, setKeywords] = useState<Keyword[] | undefined>(undefined);
     const [isloading, setIsloading] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
 
     useEffect(() => {
-        setIsloading(true)
-        getAllData("http://localhost:5000/stopword")
-            .then(res => setStopwords(res))
-            .finally(() => setIsloading(false))
+        getAllKeywords();
     }, []);
 
-    const isEditing = (record: Stopword) => record.id === editingId;
+    const getAllKeywords = () => {
+        setIsloading(true)
+        getAllData("http://localhost:5000/keyword")
+            .then(res => setKeywords(res))
+            .finally(() => setIsloading(false))
+    }
 
-    const edit = (record: Stopword) => {
+    const isEditing = (record: Keyword) => record.id === editingId;
+
+    const edit = (record: Keyword) => {
         form.setFieldsValue({ ...record });
         setEditingId(record.id);
     };
@@ -80,19 +84,16 @@ export function StopWordsPage() {
     const save = async (key: number) => {
         try {
             setIsloading(true);
-            const newStopword = (await form.validateFields()) as Stopword;
-            updateData("http://localhost:5000/stopword", key, newStopword.stop_word)
+            const newKeyword = (await form.validateFields()) as Keyword;
+            updateData("http://localhost:5000/keyword", key, newKeyword.key_word)
                 .then((res) => console.log(res))
                 .finally(() => {
-                    setIsloading(true)
-                    getAllData("http://localhost:5000/stopword")
-                        .then(res => setStopwords(res))
-                        .finally(() => {
-                            setEditingId(null)
-                            setIsloading(false)
-                        })
+                    setIsloading(true);
+                    getAllKeywords();
+                    setEditingId(null);
                 })
-        } catch (errInfo) {
+        }
+        catch (errInfo) {
             console.log('Validate Failed:', errInfo);
         }
     };
@@ -106,15 +107,15 @@ export function StopWordsPage() {
             editable: false
         },
         {
-            title: 'Töltelékszó',
-            dataIndex: 'stop_word',
-            key: 'stop_word',
+            title: 'Kulcsszó',
+            dataIndex: 'key_word',
+            key: 'key_word',
             editable: true
         },
         {
             title: '',
             dataIndex: 'operation',
-            render: (_: any, record: Stopword) => {
+            render: (_: any, record: Keyword) => {
                 const editable = isEditing(record);
                 return editable ? (
                     <span>
@@ -137,14 +138,12 @@ export function StopWordsPage() {
             key: 'delete',
             dataIndex: 'delete',
             width: '10%',
-            render: (_text: any, record: Stopword) => (
-                <button onClick={() => deleteData("http://localhost:5000/stopword", record.id)
+            render: (_text: any, record: Keyword) => (
+                <button onClick={() => deleteData("http://localhost:5000/keyword", record.id)
                     .then((res) => console.log(res))
                     .finally(() => {
-                        setIsloading(true)
-                        getAllData("http://localhost:5000/stopword")
-                            .then(res => setStopwords(res))
-                            .finally(() => setIsloading(false))
+                        setIsloading(true);
+                        getAllKeywords();
                     })}>
                     {"Törlés"}
                 </button >
@@ -158,7 +157,7 @@ export function StopWordsPage() {
         }
         return {
             ...col,
-            onCell: (record: Stopword) => ({
+            onCell: (record: Keyword) => ({
                 record,
                 inputtype: 'text',
                 dataIndex: col.dataIndex,
@@ -170,7 +169,7 @@ export function StopWordsPage() {
 
     return (
         <div className="content">
-            {stopwords && !isloading &&
+            {keywords && !isloading &&
                 <Form form={form} component={false}>
                     <Table
                         components={{
@@ -179,13 +178,11 @@ export function StopWordsPage() {
                             },
                         }}
                         bordered
-                        dataSource={stopwords}
+                        dataSource={keywords}
                         columns={mergedColumns}
                         rowClassName="editable-row"
                         rowKey="id"
-                        pagination={{
-                            onChange: cancel,
-                        }}
+                        pagination={false}
                     />
                 </Form>}
             <Button style={{ float: 'right' }} onClick={() => navigate('./add')}>Új</Button>
