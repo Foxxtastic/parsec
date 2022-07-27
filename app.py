@@ -6,7 +6,7 @@ import huspacy
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from hu_nlp import find_keywords, get_most_common_words, get_sentences
+from backend.hu_nlp import find_keywords, get_most_common_words, get_sentences
 
 
 app = Flask(__name__)
