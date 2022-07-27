@@ -20,8 +20,7 @@
     "web-vitals": "^2.1.4"
   },
   "cacheDirectories": [
-    "/node_modules",
-    "/venv"
+    "/node_modules"
   ],
   "scripts": {
     "start": "react-scripts start",
