@@ -11,6 +11,9 @@ Backend (python): cd ./backend -> pip install -r requirements.txt (virtuális k�
 
 c:\Python35\python -m venv c:\...project_helye\backend\myenv
 
+  pip install https://huggingface.co/huspacy/hu_core_news_lg/resolve/main/hu_core_news_lg-any-py3-none-any.whl
+  Ez a magyar nyelvi csomag, a dokkerizálásnál automatikus, "sima" teszteléskor manuális (nálam lokálisan működik enélkül is, de nem lehet tudni)
+  
   python -m flask run
 
 Client: cd ./client -> npm install
