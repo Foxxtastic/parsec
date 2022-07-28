@@ -9,7 +9,7 @@ Az adatbázis önmagában fent van a herokun - azt használjuk lokálisan is. Í
 
 - Sajnos így a program jelenleg csak lokálisan tesztelhető.
 
-Backend (python): cd ./backend -> pip install -r requirements.txt
+Backend (python): cd ./backend -> pip install -r requirements.txt (virtuális környezetben célszerű)
 
 Client: cd ./client -> npm install
 
