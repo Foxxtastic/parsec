@@ -54,7 +54,7 @@ def get_most_common_words(raw_text: str):
             'verbs': [dict(zip(fields, d)) for d in common_verbs]}
 
 
-def find_keywords(raw_text: str, keywords: list[str]):
+def find_keywords(raw_text: str, keywords: any):
     nlp = huspacy.load()
     m_tool = Matcher(nlp.vocab)
     sentence = nlp(raw_text)

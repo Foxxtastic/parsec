@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgres_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: parsec_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:5.5
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmins
+  backend:
+    build: backend
+    command: [ "flask", "run", "--host=0.0.0.0" ]
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - db
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+    ports:
+      - "5000:5000"
+
+  client:
+    build: client
+    command: [ "npm", "start" ]
+    volumes:
+      - ./client:/frontend
+      - node-modules:/frontend/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+volumes:
+  db-data:
+  pgadmin-data:
+  node-modules:
