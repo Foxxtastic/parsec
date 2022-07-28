@@ -2,6 +2,7 @@ from collections import Counter
 import os
 import re
 import spacy
+import huspacy
 from spacy.matcher import Matcher
 from spacy.symbols import ORTH
 
@@ -18,7 +19,7 @@ def set_custom_segmentation(doc):
 def get_sentences(raw_text: str):
     text = os.linesep.join([s for s in raw_text.splitlines() if s])
     text = re.sub(' +', ' ', text)  # sok space egymás után kivéve.
-    nlp = spacy.load("hu_core_news_lg")
+    nlp = huspacy.load()
     nlp.add_pipe('segm', first=True)
     # külföldi rövidítés esetére részmegoldás:
     nlp.tokenizer.add_special_case('.,', [{ORTH: '.,'}])
@@ -34,7 +35,7 @@ def get_most_common_words(raw_text: str):
     def exclude_not_wanted(token):
         return not token.is_stop and not token.is_punct and not token.is_digit
 
-    nlp = spacy.load("hu_core_news_lg")
+    nlp = huspacy.load()
     doc = nlp(raw_text)
     words = [token.text for token in doc if exclude_not_wanted(token)]
     nouns = [token.text for token in doc if exclude_not_wanted(
@@ -54,7 +55,7 @@ def get_most_common_words(raw_text: str):
 
 
 def find_keywords(raw_text: str, keywords: list[str]):
-    nlp = spacy.load("hu_core_news_lg")
+    nlp = huspacy.load()
     m_tool = Matcher(nlp.vocab)
     sentence = nlp(raw_text)
     pattern = []
