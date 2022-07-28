@@ -24,6 +24,7 @@ def get_db_connecton():
     return conn
 
 
+huspacy.download('hu_core_news_lg')
 nlp = huspacy.load()
 
 
