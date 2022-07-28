@@ -1,0 +1,74 @@
+@import '~antd/dist/antd.css';
+
+.home-page {
+    padding: 1em;
+    font-size: 2em;
+}
+
+.text-content {
+    border: 1px solid black;
+    padding: 1em;
+    margin-top: 2em;
+    overflow-y: auto;
+    max-height: 500px;
+    white-space: pre-line;
+}
+
+.text-line {
+    font-size: 1.1em;
+    margin: 1em, 0.5em, 1em, 0.5em;
+}
+
+.content {
+    padding: 1em;
+}
+
+.editable-row .ant-form-item-explain {
+    position: absolute;
+    top: 100%;
+    font-size: 12px;
+  }
+
+  .cancel {
+    cursor: pointer;
+    color: brown;
+  }
+
+.upload-component {
+    display: block;
+    float: right;
+}
+
+button {
+    margin: 0.5em;
+}
+
+.right-button {
+    float: right;
+}
+
+.ant-checkbox {
+    margin-right: 1em;
+}
+
+.checkbox-fir .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.checkbox-sec .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #e67e22;
+    border-color: #e67e22;
+}
+
+.button-fir {
+    color: #2980b9;
+}
+
+.button-sec {
+    color: #e67e22;
+}
+
+.ant-modal-body {
+    overflow-y: auto;
+}
