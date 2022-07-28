@@ -20,6 +20,8 @@ Client: cd ./client -> npm install
 
   npm start
 
+docker: docker-compose up
+
 Az app menük: 
 - dokumentum: Txt- fájl feltöltése, az adatbázisban levő fájlok táblázatban, a adott sorra használhatjuk az adott szövegfájlt.
 
