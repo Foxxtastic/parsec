@@ -10,8 +10,6 @@ type TextComponentProps = {
     onClose: () => void
 }
 
-let resultIsAwailable = false;
-
 export function TextComponent({ name, sentences, onClose }: TextComponentProps) {
     const { Title } = Typography;
     const [isloading, setIsloading] = useState(false);
@@ -52,8 +50,7 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
                 setCommonWords(res.common_words)
             })
             .finally(() => {
-                setIsloading(false)
-                resultIsAwailable = true
+                setIsloading(false);
             });
     }
 
@@ -100,7 +97,7 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
                         Hozzáadás kulcskifejezésként
                     </Button>
                     <Button
-                        disabled={resultIsAwailable === false}
+                        disabled={!keywords  || !commonWords}
                         onClick={() => showModal()}>
                         Eredmény megtekintése
                     </Button>
