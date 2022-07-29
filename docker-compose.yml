@@ -6,8 +6,6 @@ services:
     command: [ "flask", "run", "--host=0.0.0.0" ]
     volumes:
       - ./backend:/backend
-    depends_on:
-      - db
     environment:
       - FLASK_ENV=development
       - FLASK_APP=app.py
@@ -26,6 +24,4 @@ services:
     depends_on:
       - backend
 volumes:
-  db-data:
-  pgadmin-data:
   node-modules:
