@@ -11,7 +11,7 @@ export function AddKeyword() {
     const [keyword, setKeyword] = useState<string>('');
 
     const addKeyword = () => {
-        createData("http://localhost:5000/keyword", keyword)
+        createData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/keyword", keyword)
             .then(res => console.log(res))
             .finally(() => navigate(-1))
     }

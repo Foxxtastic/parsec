@@ -83,7 +83,7 @@ export function deleteData(url: string, id: number) {
 }
 
 export function getKeywordsInDocument(text: string) {
-    return fetch("http://localhost:5000/find_keywords", {
+    return fetch("https://dolphin-app-e3wt6.ondigitalocean.app/backend/find_keywords", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
