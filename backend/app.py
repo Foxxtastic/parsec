@@ -12,9 +12,6 @@ app = Flask(__name__)
 cors = CORS(app, origins="*")
 app.config['CORS_HEADERS'] = 'Access-Control-Allow-Origin'
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
-
 
 def get_db_connecton():
     conn = psycopg2.connect(
@@ -218,3 +215,7 @@ def stopword():
 
         else:
             return 'Content-Type not supported!'
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=False)
