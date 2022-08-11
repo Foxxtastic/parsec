@@ -59,7 +59,7 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
         const newKeywords = approvableSentences.filter(_ => _.addAsKeyword).map(x => x.text.toLowerCase().split(','))
         const promises = []
         for (let i = 0; i < newKeywords.length; i++) {
-            promises.push(createData("http://localhost:5000/keyword", newKeywords[i].toString()))
+            promises.push(createData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/keyword", newKeywords[i].toString()))
         }
         Promise.all(promises).finally(() => setIsloading(false))
     }
@@ -97,7 +97,7 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
                         Hozzáadás kulcskifejezésként
                     </Button>
                     <Button
-                        disabled={!keywords  || !commonWords}
+                        disabled={!keywords || !commonWords}
                         onClick={() => showModal()}>
                         Eredmény megtekintése
                     </Button>
