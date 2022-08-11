@@ -11,7 +11,7 @@ export function AddStopword() {
     const [stopword, setStopword] = useState<string>('');
 
     const addStopWord = () => {
-        createData("http://localhost:5000/stopword", stopword)
+        createData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/stopword", stopword)
             .then(res => console.log(res))
             .finally(() => navigate(-1))
     }

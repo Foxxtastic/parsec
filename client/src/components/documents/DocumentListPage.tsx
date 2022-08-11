@@ -26,14 +26,14 @@ export function DocumentListPage() {
 
     const getAllDocuments = () => {
         setIsloading(true);
-        getAllData("http://localhost:5000/document")
+        getAllData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/document")
             .then(res => setDocuments(res))
             .finally(() => setIsloading(false))
     }
 
     const getDocumentById = (id: number) => {
         setIsloading(true);
-        getData("http://localhost:5000/document", id)
+        getData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/document", id)
             .then(res => setFile(res))
             .finally(() => setIsloading(false))
 
@@ -41,7 +41,7 @@ export function DocumentListPage() {
 
     const uploadFile = (file: RcFile) => {
         setIsloading(true);
-        createFile("http://localhost:5000/document", file)
+        createFile("https://dolphin-app-e3wt6.ondigitalocean.app/backend/document", file)
             .then(res => console.log(res))
             .finally(() => {
                 getAllDocuments();
@@ -98,7 +98,7 @@ export function DocumentListPage() {
             render: (_text: any, record: MyDocument) => (
                 <button onClick={(e: any) => {
                     e.stopPropagation();
-                    deleteData("http://localhost:5000/document", record.id)
+                    deleteData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/document", record.id)
                         .then((res) => console.log(res))
                         .finally(() => {
                             setIsloading(true)
