@@ -65,8 +65,7 @@ export function StopwordsPage() {
 
     const getAllStopwords = () => {
         setIsloading(true)
-        getAllData("https://
-parsec - bps74.ondigitalocean.appbackend / stopword")
+        getAllData("https://parsec-bps74.ondigitalocean.app/backend/stopword")
             .then(res => setStopwords(res))
             .finally(() => setIsloading(false))
     }
@@ -86,8 +85,7 @@ parsec - bps74.ondigitalocean.appbackend / stopword")
         try {
             setIsloading(true);
             const newStopword = (await form.validateFields()) as Stopword;
-            updateData("https://
-parsec - bps74.ondigitalocean.appbackend / stopword", key, newStopword.stop_word)
+            updateData("https://parsec-bps74.ondigitalocean.app/backend/stopword", key, newStopword.stop_word)
                 .then((res) => console.log(res))
                 .finally(() => {
                     setIsloading(true);
@@ -140,8 +138,7 @@ parsec - bps74.ondigitalocean.appbackend / stopword", key, newStopword.stop_word
             dataIndex: 'delete',
             width: '10%',
             render: (_text: any, record: Stopword) => (
-                <button onClick={() => deleteData("https://
-parsec - bps74.ondigitalocean.appbackend / stopword", record.id)
+                <button onClick={() => deleteData("https://parsec-bps74.ondigitalocean.app/backend/stopword", record.id)
                     .then((res) => console.log(res))
                     .finally(() => {
                         setIsloading(true);

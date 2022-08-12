@@ -65,8 +65,7 @@ export function KeywordsPage() {
 
     const getAllKeywords = () => {
         setIsloading(true)
-        getAllData("https://
-parsec - bps74.ondigitalocean.appbackend / keyword")
+        getAllData("https://parsec-bps74.ondigitalocean.app/backend/keyword")
             .then(res => setKeywords(res))
             .finally(() => setIsloading(false))
     }
@@ -86,8 +85,7 @@ parsec - bps74.ondigitalocean.appbackend / keyword")
         try {
             setIsloading(true);
             const newKeyword = (await form.validateFields()) as Keyword;
-            updateData("https://
-parsec - bps74.ondigitalocean.appbackend / keyword", key, newKeyword.key_word)
+            updateData("https://parsec-bps74.ondigitalocean.app/backend/keyword", key, newKeyword.key_word)
                 .then((res) => console.log(res))
                 .finally(() => {
                     setIsloading(true);
@@ -141,8 +139,7 @@ parsec - bps74.ondigitalocean.appbackend / keyword", key, newKeyword.key_word)
             dataIndex: 'delete',
             width: '10%',
             render: (_text: any, record: Keyword) => (
-                <button onClick={() => deleteData("https://
-parsec - bps74.ondigitalocean.appbackend / keyword", record.id)
+                <button onClick={() => deleteData("https://parsec-bps74.ondigitalocean.app/backend/keyword", record.id)
                     .then((res) => console.log(res))
                     .finally(() => {
                         setIsloading(true);
