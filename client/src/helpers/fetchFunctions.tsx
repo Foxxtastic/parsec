@@ -83,19 +83,18 @@ export function deleteData(url: string, id: number) {
 }
 
 export function getKeywordsInDocument(text: string) {
-    return fetch("https://
-parsec - bps74.ondigitalocean.appbackend / find_keywords", {
+    return fetch("https://parsec-bps74.ondigitalocean.app/backend/find_keywords", {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json'
-    },
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(text)
     })
         .then(res => res.json())
-    .then(jsonResponse => {
-        if (jsonResponse.error) {
-            throw new Error(jsonResponse.error.message);
-        }
-        return jsonResponse;
-    })
+        .then(jsonResponse => {
+            if (jsonResponse.error) {
+                throw new Error(jsonResponse.error.message);
+            }
+            return jsonResponse;
+        })
 }

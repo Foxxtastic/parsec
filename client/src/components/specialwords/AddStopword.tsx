@@ -11,8 +11,7 @@ export function AddStopword() {
     const [stopword, setStopword] = useState<string>('');
 
     const addStopWord = () => {
-        createData("https://
-parsec - bps74.ondigitalocean.appbackend / stopword", stopword)
+        createData("https://parsec-bps74.ondigitalocean.app/backend/stopword", stopword)
             .then(res => console.log(res))
             .finally(() => navigate(-1))
     }
