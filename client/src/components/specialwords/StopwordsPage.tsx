@@ -65,7 +65,8 @@ export function StopwordsPage() {
 
     const getAllStopwords = () => {
         setIsloading(true)
-        getAllData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/stopword")
+        getAllData("https://
+parsec - bps74.ondigitalocean.appbackend / stopword")
             .then(res => setStopwords(res))
             .finally(() => setIsloading(false))
     }
@@ -85,7 +86,8 @@ export function StopwordsPage() {
         try {
             setIsloading(true);
             const newStopword = (await form.validateFields()) as Stopword;
-            updateData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/stopword", key, newStopword.stop_word)
+            updateData("https://
+parsec - bps74.ondigitalocean.appbackend / stopword", key, newStopword.stop_word)
                 .then((res) => console.log(res))
                 .finally(() => {
                     setIsloading(true);
@@ -138,7 +140,8 @@ export function StopwordsPage() {
             dataIndex: 'delete',
             width: '10%',
             render: (_text: any, record: Stopword) => (
-                <button onClick={() => deleteData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/stopword", record.id)
+                <button onClick={() => deleteData("https://
+parsec - bps74.ondigitalocean.appbackend / stopword", record.id)
                     .then((res) => console.log(res))
                     .finally(() => {
                         setIsloading(true);
