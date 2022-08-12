@@ -59,7 +59,8 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
         const newKeywords = approvableSentences.filter(_ => _.addAsKeyword).map(x => x.text.toLowerCase().split(','))
         const promises = []
         for (let i = 0; i < newKeywords.length; i++) {
-            promises.push(createData("https://dolphin-app-e3wt6.ondigitalocean.app/backend/keyword", newKeywords[i].toString()))
+            promises.push(createData("https://
+parsec - bps74.ondigitalocean.appbackend / keyword", newKeywords[i].toString()))
         }
         Promise.all(promises).finally(() => setIsloading(false))
     }
