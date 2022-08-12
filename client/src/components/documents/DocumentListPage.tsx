@@ -26,15 +26,14 @@ export function DocumentListPage() {
 
     const getAllDocuments = () => {
         setIsloading(true);
-        getAllData("backend/document")
+        getAllData("https://parsec-bps74.ondigitalocean.app/backend/document")
             .then(res => setDocuments(res))
             .finally(() => setIsloading(false))
     }
 
     const getDocumentById = (id: number) => {
         setIsloading(true);
-        getData("https://
-parsec - bps74.ondigitalocean.appbackend / document", id)
+        getData("https://parsec-bps74.ondigitalocean.app/backend/document", id)
             .then(res => setFile(res))
             .finally(() => setIsloading(false))
 
@@ -42,8 +41,7 @@ parsec - bps74.ondigitalocean.appbackend / document", id)
 
     const uploadFile = (file: RcFile) => {
         setIsloading(true);
-        createFile("https://
-parsec - bps74.ondigitalocean.appbackend / document", file)
+        createFile("https://parsec-bps74.ondigitalocean.app/backend/document", file)
             .then(res => console.log(res))
             .finally(() => {
                 getAllDocuments();
@@ -100,8 +98,7 @@ parsec - bps74.ondigitalocean.appbackend / document", file)
             render: (_text: any, record: MyDocument) => (
                 <button onClick={(e: any) => {
                     e.stopPropagation();
-                    deleteData("https://
-parsec - bps74.ondigitalocean.appbackend / document", record.id)
+                    deleteData("https://parsec-bps74.ondigitalocean.app/backend/document", record.id)
                         .then((res) => console.log(res))
                         .finally(() => {
                             setIsloading(true)
