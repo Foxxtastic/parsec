@@ -2,7 +2,9 @@ import { Button, Checkbox, Spin, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { createData, getKeywordsInDocument } from "../../helpers/fetchFunctions";
 import { CommonWord, KeywordInDocument, Sentence } from "../../types/types";
+import { ContextMenu } from "../common/ContextMenu";
 import { ResultsComponent } from "./ResultsComponent";
+import { WordList } from "./WordList";
 
 type TextComponentProps = {
     name: string,
@@ -16,11 +18,20 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
     const [approvableSentences, setApprovableSentences] = useState<Sentence[]>([]);
     const [keywords, setKeywords] = useState<KeywordInDocument[]>([]);
     const [commonWords, setCommonWords] = useState<CommonWord | undefined>(undefined);
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(0);
+    const [selectedText, setSelectedText] = useState<string | undefined>();
+    const [contextKeywords, setContextKeywords] = useState<string[]>([]);
 
-    const showModal = () => {
-        setIsModalVisible(true);
+    const showModal = (id: number) => {
+        setIsModalVisible(id);
     };
+
+    useEffect(() => {
+        document.addEventListener("mouseup", () => setSelectedText(window.getSelection()?.toString().trim()));
+        return () => {
+            document.removeEventListener("mouseup", () => setSelectedText(window.getSelection()?.toString().trim()));
+        }
+    }, [])
 
     useEffect(() => {
         setApprovableSentences(sentences.map(_ => ({
@@ -54,14 +65,34 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
             });
     }
 
-    const addAsKeyword = async () => {
+    const addSentenceAsKeyword = async () => {
         setIsloading(true);
         const newKeywords = approvableSentences.filter(_ => _.addAsKeyword).map(x => x.text.toLowerCase().split(','))
-        const promises = []
+        const promises = [];
         for (let i = 0; i < newKeywords.length; i++) {
-            promises.push(createData("https://parsec-bps74.ondigitalocean.app/backend/backend/keyword", newKeywords[i].toString()))
+            promises.push(createData("https://parsec-bps74.ondigitalocean.app/backend/keyword", newKeywords[i].toString()))
         }
-        Promise.all(promises).finally(() => setIsloading(false))
+        Promise.all(promises).finally(() => setIsloading(false));
+    }
+
+    const addTexttoList = (text: string) => {
+        const textLowerCase = text.toLowerCase();
+        const newList = [...contextKeywords]
+        if (!newList.includes(textLowerCase)) {
+            newList.push(textLowerCase);
+            setContextKeywords(newList);
+        }
+    }
+
+    const addListToKeywords = async () => {
+        if (contextKeywords.length !== 0) {
+            setIsloading(true);
+            const promises = [];
+            for (let i = 0; i < contextKeywords.length; i++) {
+                promises.push(createData("https://parsec-bps74.ondigitalocean.app/backend/keyword", contextKeywords[i]))
+            }
+            Promise.all(promises).finally(() => setIsloading(false));
+        }
     }
 
     return (
@@ -93,12 +124,16 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
                     </Button>
                     <Button
                         className="button-sec"
-                        onClick={() => addAsKeyword()}>
+                        onClick={() => addSentenceAsKeyword()}>
                         Hozzáadás kulcskifejezésként
                     </Button>
                     <Button
+                        onClick={() => showModal(2)}>
+                        Kijelölt szavak
+                    </Button>
+                    <Button
                         disabled={!keywords || !commonWords}
-                        onClick={() => showModal()}>
+                        onClick={() => showModal(1)}>
                         Eredmény megtekintése
                     </Button>
                     <Button
@@ -113,6 +148,13 @@ export function TextComponent({ name, sentences, onClose }: TextComponentProps) 
                 visible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
             />
+            <WordList
+                words={contextKeywords}
+                setIsModalVisible={setIsModalVisible}
+                visible={isModalVisible}
+                onConfirm={addListToKeywords}
+                onDelete={() => setContextKeywords([])} />
+            {<ContextMenu text={selectedText} onClick={addTexttoList} />}
         </>
     )
 }
