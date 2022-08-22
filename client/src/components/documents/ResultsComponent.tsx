@@ -5,8 +5,8 @@ import { CommonWord, KeywordInDocument } from "../../types/types"
 type ResultsComponentProps = {
     keywords: KeywordInDocument[],
     commonWords: CommonWord | undefined,
-    visible: boolean,
-    setIsModalVisible: (condition: boolean) => void
+    visible: number,
+    setIsModalVisible: (condition: number) => void
 }
 
 export function ResultsComponent({ keywords, commonWords, visible, setIsModalVisible }: ResultsComponentProps) {
@@ -26,20 +26,18 @@ export function ResultsComponent({ keywords, commonWords, visible, setIsModalVis
     }, [keywords]);
 
     const handleOk = () => {
-        setIsModalVisible(false);
+        setIsModalVisible(0);
     };
 
     const handleCancel = () => {
-        setIsModalVisible(false);
+        setIsModalVisible(0);
     };
-
-    console.log(keywordsCounted)
 
     return (
         <div className="results">
             <Modal
                 title="Tartalmazott kulcsszavak és gyakori szavak:"
-                visible={visible}
+                visible={visible === 1}
                 onOk={handleOk}
                 onCancel={handleCancel}>
                 <Descriptions title="Előfordult kulcsszavak">
